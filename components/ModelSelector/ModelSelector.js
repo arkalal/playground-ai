@@ -13,7 +13,11 @@ const ModelSelector = ({ model, setModel }) => {
   return (
     <div className={styles.modelSelector}>
       <h3>MODEL</h3>
-      <select value={model} onChange={() => {}} className={styles.modelSelect}>
+      <select
+        value={model}
+        onChange={(e) => setModel(e.target.value)}
+        className={styles.modelSelect}
+      >
         {models.map((model) => (
           <option key={model} value={model}>
             {model}

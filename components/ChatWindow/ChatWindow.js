@@ -1,9 +1,8 @@
-// components/ChatWindow.js
-
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useChat } from "ai/react";
+import axios from "../../axios/api";
 import styles from "../Chat.module.scss";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import ChatInput from "../ChatInput/ChatInput";
@@ -11,6 +10,13 @@ import ModelSelector from "../ModelSelector/ModelSelector";
 import SliderControl from "../SliderControl/SliderControl";
 
 const ChatWindow = () => {
+  const [model, setModel] = useState("gpt-3.5-turbo");
+  const [outputLength, setOutputLength] = useState(512);
+  const [temperature, setTemperature] = useState(0.7);
+  const [topP, setTopP] = useState(1.0);
+  const [topK, setTopK] = useState(50);
+  const [repetitionPenalty, setRepetitionPenalty] = useState(1.0);
+
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/chat",
   });
@@ -21,10 +27,42 @@ const ChatWindow = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const response = await axios.get("userSettings");
+
+      const settings = response.data;
+      if (settings) {
+        setModel(settings.model);
+        setOutputLength(settings.outputLength);
+        setTemperature(settings.temperature);
+        setTopP(settings.topP);
+        setTopK(settings.topK);
+        setRepetitionPenalty(settings.repetitionPenalty);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  const saveSettings = async () => {
+    await axios.post("userSettings", {
+      model,
+      outputLength,
+      temperature,
+      topP,
+      topK,
+      repetitionPenalty,
+    });
+  };
+
+  useEffect(() => {
+    saveSettings();
+  }, [model, outputLength, temperature, topP, topK, repetitionPenalty]);
+
   return (
     <div className={styles.chatContainer}>
       <div className={styles.modelDisplay}>
-        <p>gpt-3.5-turbo</p>
+        <p>{model}</p>
       </div>
       <div className={styles.chatBox}>
         <div className={styles.chatWindow}>
@@ -41,43 +79,43 @@ const ChatWindow = () => {
           />
         </div>
         <div className={styles.settingsPanel}>
-          <ModelSelector model={"gpt-3.5-turbo"} setModel={() => {}} />
+          <ModelSelector model={model} setModel={setModel} />
           <div className={styles.modifications}>
             <h3>MODIFICATIONS</h3>
             <SliderControl
               label="Output Length"
-              value={512}
-              setValue={() => {}}
+              value={outputLength}
+              setValue={setOutputLength}
               min={1}
               max={1024}
             />
             <SliderControl
               label="Temperature"
-              value={0.7}
-              setValue={() => {}}
+              value={temperature}
+              setValue={setTemperature}
               min={0}
               max={1}
               step={0.01}
             />
             <SliderControl
               label="Top-P"
-              value={10}
-              setValue={() => {}}
+              value={topP}
+              setValue={setTopP}
               min={0}
               max={1}
               step={0.01}
             />
             <SliderControl
               label="Top-K"
-              value={20}
-              setValue={() => {}}
+              value={topK}
+              setValue={setTopK}
               min={0}
               max={100}
             />
             <SliderControl
               label="Repetition Penalty"
-              value={20}
-              setValue={() => {}}
+              value={repetitionPenalty}
+              setValue={setRepetitionPenalty}
               min={0}
               max={2}
               step={0.01}
