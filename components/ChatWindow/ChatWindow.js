@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useChat } from "ai/react";
-import axios from "../../axios/api";
 import styles from "../Chat.module.scss";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import ChatInput from "../ChatInput/ChatInput";
@@ -19,6 +18,7 @@ const ChatWindow = () => {
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/chat",
+    body: { model, outputLength, temperature, topP, topK, repetitionPenalty },
   });
 
   const messagesEndRef = useRef(null);
@@ -26,38 +26,6 @@ const ChatWindow = () => {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-  useEffect(() => {
-    const fetchSettings = async () => {
-      const response = await axios.get("userSettings");
-
-      const settings = response.data;
-      if (settings) {
-        setModel(settings.model);
-        setOutputLength(settings.outputLength);
-        setTemperature(settings.temperature);
-        setTopP(settings.topP);
-        setTopK(settings.topK);
-        setRepetitionPenalty(settings.repetitionPenalty);
-      }
-    };
-    fetchSettings();
-  }, []);
-
-  const saveSettings = async () => {
-    await axios.post("userSettings", {
-      model,
-      outputLength,
-      temperature,
-      topP,
-      topK,
-      repetitionPenalty,
-    });
-  };
-
-  useEffect(() => {
-    saveSettings();
-  }, [model, outputLength, temperature, topP, topK, repetitionPenalty]);
 
   return (
     <div className={styles.chatContainer}>
