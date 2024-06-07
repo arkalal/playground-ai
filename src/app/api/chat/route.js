@@ -2,12 +2,6 @@ import { Configuration, OpenAIApi } from "openai-edge";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import { NextResponse } from "next/server";
 
-const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(config);
-
 export async function POST(req) {
   try {
     const {
@@ -18,7 +12,14 @@ export async function POST(req) {
       topP,
       topK,
       repetitionPenalty,
+      Key,
     } = await req.json();
+
+    const config = new Configuration({
+      apiKey: Key,
+    });
+
+    const openai = new OpenAIApi(config);
 
     const response = await openai.createChatCompletion({
       model: model || "gpt-3.5-turbo",
