@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useChat } from "ai/react";
-import axios from "../../axios/api";
 import styles from "../Chat.module.scss";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import ChatInput from "../ChatInput/ChatInput";
 import ModelSelector from "../ModelSelector/ModelSelector";
 import SliderControl from "../SliderControl/SliderControl";
+import { IoChatboxEllipsesSharp } from "react-icons/io5";
+import ApiKey from "../reuse/popups/ApiKey/ApiKey";
 
 const ChatWindow = () => {
   const [model, setModel] = useState("gpt-3.5-turbo");
@@ -16,62 +17,63 @@ const ChatWindow = () => {
   const [topP, setTopP] = useState(1.0);
   const [topK, setTopK] = useState(50);
   const [repetitionPenalty, setRepetitionPenalty] = useState(1.0);
+  const [KeyPopup, setKeyPopup] = useState(false);
+  const [Key, setKey] = useState("");
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/chat",
-  });
-
-  const messagesEndRef = useRef(null);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  useEffect(() => {
-    const fetchSettings = async () => {
-      const response = await axios.get("userSettings");
-
-      const settings = response.data;
-      if (settings) {
-        setModel(settings.model);
-        setOutputLength(settings.outputLength);
-        setTemperature(settings.temperature);
-        setTopP(settings.topP);
-        setTopK(settings.topK);
-        setRepetitionPenalty(settings.repetitionPenalty);
-      }
-    };
-    fetchSettings();
-  }, []);
-
-  const saveSettings = async () => {
-    await axios.post("userSettings", {
+    body: {
       model,
       outputLength,
       temperature,
       topP,
       topK,
       repetitionPenalty,
-    });
-  };
+      Key,
+    },
+  });
+
+  const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    saveSettings();
-  }, [model, outputLength, temperature, topP, topK, repetitionPenalty]);
+    if (messages.length > 0) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div className={styles.chatContainer}>
-      <div className={styles.modelDisplay}>
-        <p>{model}</p>
+      <button onClick={() => setKeyPopup(true)} className={styles.chatApiKey}>
+        Your API Key
+      </button>
+
+      {KeyPopup && (
+        <>
+          <ApiKey setKey={setKey} setKeyPopup={setKeyPopup} />
+        </>
+      )}
+
+      <div className={styles.modelBoxes}>
+        <div className={styles.modelChat}>
+          <IoChatboxEllipsesSharp />
+          <h3>CHAT</h3>
+        </div>
+
+        <div className={styles.modelDisplay}>
+          <p>{model}</p>
+        </div>
       </div>
+
       <div className={styles.chatBox}>
         <div className={styles.chatWindow}>
           <div className={styles.chatHistory}>
             {messages.map((message, index) => (
               <ChatMessage key={index} message={message} />
             ))}
+
             <div ref={messagesEndRef} />
           </div>
+
           <ChatInput
             value={input}
             onChange={handleInputChange}
