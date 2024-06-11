@@ -13,10 +13,12 @@ export async function POST(req) {
       topK,
       repetitionPenalty,
       Key,
+      Endpoint,
     } = await req.json();
 
     const config = new Configuration({
       apiKey: Key,
+      basePath: Endpoint,
     });
 
     const openai = new OpenAIApi(config);
