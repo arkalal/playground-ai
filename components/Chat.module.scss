@@ -150,6 +150,16 @@
       border-top-right-radius: 10px;
       height: 650px;
 
+      .settingsApiInput {
+        margin-bottom: 20px;
+
+        input {
+          width: 100%;
+          padding: 10px;
+          border-radius: 10px;
+        }
+      }
+
       .modelSelector {
         margin-bottom: 20px;
 

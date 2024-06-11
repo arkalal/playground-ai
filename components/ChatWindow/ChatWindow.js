@@ -17,7 +17,7 @@ const ChatWindow = () => {
   const [topP, setTopP] = useState(1.0);
   const [topK, setTopK] = useState(50);
   const [repetitionPenalty, setRepetitionPenalty] = useState(1.0);
-  const [KeyPopup, setKeyPopup] = useState(false);
+  // const [KeyPopup, setKeyPopup] = useState(false);
   const [Key, setKey] = useState("");
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -43,15 +43,15 @@ const ChatWindow = () => {
 
   return (
     <div className={styles.chatContainer}>
-      <button onClick={() => setKeyPopup(true)} className={styles.chatApiKey}>
+      {/* <button onClick={() => setKeyPopup(true)} className={styles.chatApiKey}>
         Your API Key
-      </button>
+      </button> */}
 
-      {KeyPopup && (
+      {/* {KeyPopup && (
         <>
           <ApiKey setKey={setKey} setKeyPopup={setKeyPopup} />
         </>
-      )}
+      )} */}
 
       <div className={styles.modelBoxes}>
         <div className={styles.modelChat}>
@@ -81,6 +81,14 @@ const ChatWindow = () => {
           />
         </div>
         <div className={styles.settingsPanel}>
+          <div className={styles.settingsApiInput}>
+            <input
+              onChange={(e) => setKey(e.target.value)}
+              type="text"
+              placeholder="Enter Your Api Key"
+              value={Key}
+            />
+          </div>
           <ModelSelector model={model} setModel={setModel} />
           <div className={styles.modifications}>
             <h3>MODIFICATIONS</h3>
