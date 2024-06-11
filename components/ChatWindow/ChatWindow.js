@@ -59,9 +59,9 @@ const ChatWindow = () => {
           <h3>CHAT</h3>
         </div>
 
-        <div className={styles.modelDisplay}>
+        {/* <div className={styles.modelDisplay}>
           <p>{model}</p>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.chatBox}>
