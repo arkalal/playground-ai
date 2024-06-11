@@ -19,6 +19,7 @@ const ChatWindow = () => {
   const [repetitionPenalty, setRepetitionPenalty] = useState(1.0);
   // const [KeyPopup, setKeyPopup] = useState(false);
   const [Key, setKey] = useState("");
+  const [Endpoint, setEndpoint] = useState("");
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     api: "/api/chat",
@@ -30,6 +31,7 @@ const ChatWindow = () => {
       topK,
       repetitionPenalty,
       Key,
+      Endpoint,
     },
   });
 
@@ -89,7 +91,16 @@ const ChatWindow = () => {
               value={Key}
             />
           </div>
-          <ModelSelector model={model} setModel={setModel} />
+
+          <div className={styles.settingsApiInput}>
+            <input
+              onChange={(e) => setEndpoint(e.target.value)}
+              type="text"
+              placeholder="Enter Your Api Endpoint"
+              value={Endpoint}
+            />
+          </div>
+          {/* <ModelSelector model={model} setModel={setModel} /> */}
           <div className={styles.modifications}>
             <h3>MODIFICATIONS</h3>
             <SliderControl
