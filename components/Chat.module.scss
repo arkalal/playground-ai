@@ -144,7 +144,7 @@
     .settingsPanel {
       width: 25%;
       padding: 20px;
-      background-color: #fff;
+      background-color: #2d87d9;
       border: 1px solid #ccc;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
@@ -168,13 +168,16 @@
           margin-left: 5px;
           font-weight: 400;
           font-size: 16px;
+          color: white;
+          font-weight: 500;
         }
 
         .modelSelect {
           width: 100%;
           padding: 10px 12px;
           border-radius: 16px;
-          border: 1px solid #ccc;
+          border: none;
+          outline: none;
         }
       }
 
@@ -185,6 +188,8 @@
           margin-bottom: 10px;
           font-weight: 400;
           font-size: 16px;
+          color: white;
+          font-weight: 500;
         }
 
         .sliderControl {
@@ -207,10 +212,17 @@
           label {
             display: block;
             margin-bottom: 5px;
+            color: white;
+            font-weight: 500;
           }
 
           input[type="range"] {
             width: 100%;
+
+            &::-webkit-slider-runnable-track {
+              background-color: white;
+              border-radius: 10px;
+            }
           }
 
           span {
