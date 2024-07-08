@@ -9,6 +9,8 @@ import ModelSelector from "../ModelSelector/ModelSelector";
 import SliderControl from "../SliderControl/SliderControl";
 import { IoChatboxEllipsesSharp } from "react-icons/io5";
 import ApiKey from "../reuse/popups/ApiKey/ApiKey";
+import scaleGenLogo from "../../assets/images/sg-logo.png";
+import Image from "next/image";
 
 const ChatWindow = () => {
   const [model, setModel] = useState("gpt-3.5-turbo");
@@ -57,8 +59,13 @@ const ChatWindow = () => {
 
       <div className={styles.modelBoxes}>
         <div className={styles.modelChat}>
-          <IoChatboxEllipsesSharp />
-          <h3>CHAT</h3>
+          {/* <IoChatboxEllipsesSharp /> */}
+          <Image
+            className={styles.ScaleGenLogo}
+            src={scaleGenLogo}
+            alt="ScaleGen Logo"
+          />
+          <h3>ScaleGenAI Playground</h3>
         </div>
 
         {/* <div className={styles.modelDisplay}>
@@ -87,7 +94,7 @@ const ChatWindow = () => {
             <input
               onChange={(e) => setKey(e.target.value)}
               type="text"
-              placeholder="Enter Your Api Key"
+              placeholder="Enter Your API Key"
               value={Key}
             />
           </div>
@@ -96,7 +103,7 @@ const ChatWindow = () => {
             <input
               onChange={(e) => setEndpoint(e.target.value)}
               type="text"
-              placeholder="Enter Your Api Endpoint"
+              placeholder="Enter Your API Endpoint"
               value={Endpoint}
             />
           </div>
