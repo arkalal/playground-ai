@@ -1,5 +1,7 @@
+@import "../utils/mixins.module.scss";
+
 .chatContainer {
-  height: 100vh;
+  min-height: 100vh;
   margin-top: 20px;
 
   .chatApiKey {
@@ -56,7 +58,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      height: 650px;
+      min-height: 90vh;
 
       .chatHistory {
         height: 80%;
@@ -66,6 +68,7 @@
         flex-direction: column;
         border: 1px solid #ccc;
         border-radius: 10px;
+        background-color: $lightBlue;
 
         .chatMessage {
           display: flex;
@@ -116,6 +119,7 @@
         border-radius: 10px;
         height: 20%;
         position: relative;
+        background-color: $lightBlue;
 
         textarea {
           padding: 8px 12px;
@@ -124,6 +128,7 @@
           width: 94%;
           border: none;
           outline: none;
+          background-color: $lightBlue;
         }
 
         .icons {
@@ -148,7 +153,8 @@
       border: 1px solid #ccc;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      height: 650px;
+      min-height: 90vh;
+      background-color: $primary;
 
       .settingsApiInput {
         margin-bottom: 20px;
