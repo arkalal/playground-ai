@@ -22,7 +22,7 @@ const ChatInput = ({ value, onChange, onSubmit }) => {
         placeholder="Enter text here"
       />
       <div className={styles.icons}>
-        <FaMicrophoneAlt className={styles.icon} />
+        {/* <FaMicrophoneAlt className={styles.icon} /> */}
         <FiSend className={styles.icon} onClick={onSubmit} />
       </div>
     </form>
