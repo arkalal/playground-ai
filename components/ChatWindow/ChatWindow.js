@@ -5,21 +5,17 @@ import { useChat } from "ai/react";
 import styles from "../Chat.module.scss";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import ChatInput from "../ChatInput/ChatInput";
-import ModelSelector from "../ModelSelector/ModelSelector";
 import SliderControl from "../SliderControl/SliderControl";
-import { IoChatboxEllipsesSharp } from "react-icons/io5";
-import ApiKey from "../reuse/popups/ApiKey/ApiKey";
-import scaleGenLogo from "../../assets/images/sg-logo.png";
 import Image from "next/image";
+import scaleGenLogo from "../../assets/images/sg-logo.png";
 
 const ChatWindow = () => {
   const [model, setModel] = useState("gpt-3.5-turbo");
-  const [outputLength, setOutputLength] = useState(512);
-  const [temperature, setTemperature] = useState(0.7);
-  const [topP, setTopP] = useState(1.0);
-  const [topK, setTopK] = useState(50);
+  const [outputLength, setOutputLength] = useState(626); // Default value
+  const [temperature, setTemperature] = useState(0.8); // Default value
+  const [topP, setTopP] = useState(1.0); // Default value
+  const [topK, setTopK] = useState(50); // Default value
   const [repetitionPenalty, setRepetitionPenalty] = useState(1.0);
-  // const [KeyPopup, setKeyPopup] = useState(false);
   const [Key, setKey] = useState("");
   const [Endpoint, setEndpoint] = useState("");
 
@@ -47,19 +43,8 @@ const ChatWindow = () => {
 
   return (
     <div className={styles.chatContainer}>
-      {/* <button onClick={() => setKeyPopup(true)} className={styles.chatApiKey}>
-        Your API Key
-      </button> */}
-
-      {/* {KeyPopup && (
-        <>
-          <ApiKey setKey={setKey} setKeyPopup={setKeyPopup} />
-        </>
-      )} */}
-
       <div className={styles.modelBoxes}>
         <div className={styles.modelChat}>
-          {/* <IoChatboxEllipsesSharp /> */}
           <Image
             className={styles.ScaleGenLogo}
             src={scaleGenLogo}
@@ -67,10 +52,6 @@ const ChatWindow = () => {
           />
           <h3>ScaleGenAI Playground</h3>
         </div>
-
-        {/* <div className={styles.modelDisplay}>
-          <p>{model}</p>
-        </div> */}
       </div>
 
       <div className={styles.chatBox}>
@@ -79,10 +60,8 @@ const ChatWindow = () => {
             {messages.map((message, index) => (
               <ChatMessage key={index} message={message} />
             ))}
-
             <div ref={messagesEndRef} />
           </div>
-
           <ChatInput
             value={input}
             onChange={handleInputChange}
@@ -107,7 +86,6 @@ const ChatWindow = () => {
               value={Endpoint}
             />
           </div>
-          {/* <ModelSelector model={model} setModel={setModel} /> */}
           <div className={styles.modifications}>
             <h3>MODIFICATIONS</h3>
             <SliderControl

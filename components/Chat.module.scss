@@ -216,34 +216,63 @@
             align-items: center;
             margin-bottom: 15px;
 
-            span {
-              background-color: #ecebeb;
-              border: none;
-              border-radius: 10px;
-              padding: 5px 25px;
+            label {
+              color: white;
+              font-weight: 500;
             }
-          }
 
-          label {
-            display: block;
-            margin-bottom: 5px;
-            color: white;
-            font-weight: 500;
+            .sliderInput {
+              width: 60px;
+              padding: 10px;
+              border-radius: 5px;
+              border: 1px solid #ccc;
+              background-color: #ecebeb;
+              text-align: center;
+              appearance: none;
+              font-size: $fontSize;
+
+              /* Hiding the spinner controls */
+              -moz-appearance: textfield;
+              -webkit-appearance: none;
+            }
+
+            /* Hiding the spinner controls for Chrome, Safari, Edge, and Opera */
+            .sliderInput::-webkit-outer-spin-button,
+            .sliderInput::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
           }
 
           input[type="range"] {
             width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: 0.2s;
+            transition: opacity 0.2s;
 
-            &::-webkit-slider-runnable-track {
-              background-color: white;
-              border-radius: 10px;
+            &::-webkit-slider-thumb {
+              -webkit-appearance: none;
+              appearance: none;
+              width: 20px;
+              height: 20px;
+              background: $grey;
+              cursor: pointer;
+              border-radius: 50%;
             }
-          }
 
-          span {
-            display: block;
-            text-align: center;
-            margin-top: 5px;
+            &::-moz-range-thumb {
+              width: 20px;
+              height: 20px;
+              background: $grey;
+              cursor: pointer;
+              border-radius: 50%;
+            }
           }
         }
       }
